@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import './style.css';
-const API='/api', app=document.querySelector('#app');
+const API=location.hostname==='localhost'?'http://localhost:4000/api':'/api', app=document.querySelector('#app');
 let token=localStorage.getItem('bv_token')||'', me=null, games=[], mine=[], blocks=[], current=null;
 const el=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 async function api(p,o={}){const r=await fetch(API+p,{...o,headers:{'Content-Type':'application/json',...(token?{Authorization:'Bearer '+token}:{}),...(o.headers||{})}});const d=await r.json().catch(()=>({}));if(!r.ok)throw Error(d.error||'Request failed');return d}
