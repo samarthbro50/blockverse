@@ -79,7 +79,7 @@ async function save(published) {
     setStatus(published?'Published! Your world is now in Discover.':'Draft saved successfully.','success');await load();
   }catch(e){setStatus(e.message,'error');}finally{buttons.forEach(b=>b.disabled=false);}
 }
-function stopScene(){editorMode=false;if(raf)cancelAnimationFrame(raf);raf=null;const host=$('#stage');if(host?._ro){host._ro.disconnect();host._ro=null;}if(renderer){renderer.dispose();renderer=null;}scene=null;camera=null;}
+function stopScene(){if(raf)cancelAnimationFrame(raf);raf=null;const host=$('#stage');if(host?._ro){host._ro.disconnect();host._ro=null;}if(renderer){renderer.dispose();renderer=null;}scene=null;camera=null;}
 function draw() {
   stopScene();const host=$('#stage');if(!host)return;const w=Math.max(host.clientWidth,320),h=Math.max(host.clientHeight,400);
   scene=new THREE.Scene();scene.background=new THREE.Color('#11182a');scene.fog=new THREE.Fog('#11182a',18,38);
