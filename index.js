@@ -146,7 +146,7 @@ function validateScene(scene) {
 }
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dist = path.resolve(__dirname, '../client/dist');
+const dist = path.resolve(__dirname, 'client/dist');
 app.use(express.static(dist));
 app.get('*', (req,res) => res.sendFile(path.join(dist,'index.html')));
 app.listen(port, () => console.log(`Blockverse listening on ${port}`));
