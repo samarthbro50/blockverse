@@ -108,7 +108,7 @@ app.post('/api/games', auth, async (req, res) => {
   const title = String(req.body.title || 'Untitled world').trim().slice(0,48);
   const description = String(req.body.description || '').trim().slice(0,240);
   const scene = validateScene(req.body.scene);
-  if (!scene) return res.status(400).json({ error: 'Invalid world data. Maximum 900 blocks.' });
+  if (!scene) return res.status(400).json({ error: 'Invalid world data. Maximum 2000 blocks.' });
   const id = randomUUID();
   const { rows } = await pool.query(`INSERT INTO games(id,owner_id,title,description,scene)
     VALUES($1,$2,$3,$4,$5) RETURNING *`, [id, req.user.id, title || 'Untitled world', description, scene]);
@@ -117,7 +117,7 @@ app.post('/api/games', auth, async (req, res) => {
 
 app.put('/api/games/:id', auth, async (req, res) => {
   const scene = validateScene(req.body.scene);
-  if (!scene) return res.status(400).json({ error: 'Invalid world data. Maximum 900 blocks.' });
+  if (!scene) return res.status(400).json({ error: 'Invalid world data. Maximum 2000 blocks.' });
   const title = String(req.body.title || 'Untitled world').trim().slice(0,48);
   const description = String(req.body.description || '').trim().slice(0,240);
   const published = Boolean(req.body.published);
@@ -134,7 +134,7 @@ app.delete('/api/games/:id', auth, async (req, res) => {
 });
 
 function validateScene(scene) {
-  if (!scene || !Array.isArray(scene.blocks) || scene.blocks.length > 900) return null;
+  if (!scene || !Array.isArray(scene.blocks) || scene.blocks.length > 2000) return null;
   const blocks = [];
   for (const b of scene.blocks) {
     const x = Number(b.x), y = Number(b.y), z = Number(b.z);
