@@ -73,7 +73,7 @@ async function save(published) {
     setStatus(published?'Published! Your world is now in Discover.':'Draft saved successfully.','success');await load();
   }catch(e){setStatus(e.message,'error');}finally{buttons.forEach(b=>b.disabled=false);}
 }
-function stopScene(){if(raf)cancelAnimationFrame(raf);raf=null;if(renderer){renderer.dispose();renderer=null;}scene=null;camera=null;}
+function stopScene(){if(raf)cancelAnimationFrame(raf);raf=null;const host=$('#stage');if(host?._ro){host._ro.disconnect();host._ro=null;}if(renderer){renderer.dispose();renderer=null;}scene=null;camera=null;}scene=null;camera=null;}
 function draw() {
   stopScene();const host=$('#stage');if(!host)return;const w=Math.max(host.clientWidth,320),h=Math.max(host.clientHeight,400);
   scene=new THREE.Scene();scene.background=new THREE.Color('#11182a');scene.fog=new THREE.Fog('#11182a',18,38);
@@ -93,4 +93,4 @@ async function playGame(id) {
   $('#view').innerHTML=`<section class="page-wrap play-page"><div class="play-head"><div><div class="eyebrow">NOW PLAYING</div><h1>${esc(g.title)}</h1><p class="muted">Created by ${esc(g.owner||'Creator')} · ${esc(g.description||'Explore this community world.')}</p></div><button class="secondary" id="back-discover">← Back to worlds</button></div><div id="stage" class="play-viewport"></div><div class="play-hint">DRAG TO LOOK AROUND · SCROLL TO ZOOM</div></section>`;
   $('#back-discover').onclick=()=>go('discover');draw();
 }
-render();
+go('discover');
