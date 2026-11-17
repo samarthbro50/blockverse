@@ -2,10 +2,13 @@ services:
   - type: web
     name: blockverse
     runtime: node
-    plan: starter
-    buildCommand: npm install && npm install --prefix server && npm install --prefix client && npm run build --prefix client
-    startCommand: npm start --prefix server
+    plan: free
+    region: virginia
+    buildCommand: npm install && npm run build
+    startCommand: npm start
     envVars:
+      - key: NODE_VERSION
+        value: "22.23.2"
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
@@ -14,6 +17,8 @@ services:
           property: connectionString
       - key: JWT_SECRET
         generateValue: true
+
 databases:
   - name: blockverse-db
-    plan: basic-256mb
+    plan: free
+    region: virginia
